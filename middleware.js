@@ -20,8 +20,8 @@ const protectedRoutes = ["/profile"];
 export default function middleware(req) {
   const casdoorUserCookie = req.cookies.get("casdoorUser");
   const isAuthenticated = casdoorUserCookie ? true : false;
-  const currentUrl = parse(req.url);
-  const redirectUrl = `${currentUrl.protocol}//${currentUrl.host}/login`;
+  // const currentUrl = parse(req.url);
+  // const redirectUrl = `${currentUrl.protocol}//${currentUrl.host}/login`;
 
   if (!isAuthenticated && protectedRoutes.includes(req.nextUrl.pathname)) {
     const casdoorLoginURL = `${
@@ -29,7 +29,7 @@ export default function middleware(req) {
     }/login/oauth/authorize?client_id=${
       config.clientId
     }&response_type=code&redirect_uri=${encodeURIComponent(
-      redirectUrl
+      config.redirectUrl // redirectUrl
     )}&scope=read&state=${config.applicationName}`;
     
     return NextResponse.redirect(casdoorLoginURL);

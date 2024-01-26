@@ -12,15 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 
 const LoginCallback = (params) => {
   const router = useRouter();
-  const searchParams = params.searchParams;
-  const code = searchParams.code;
-  const state = searchParams.state;
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
+  const state = searchParams.get("state");
+  // console.log("codeTest", codeTest);
+  // console.log("???")
+  // const searchParams = params.searchParams;
+  // const code = searchParams.code;
+  // const state = searchParams.state;
 
   useEffect(() => {
     fetch(`/api/login?code=${code}&state=${state}`)

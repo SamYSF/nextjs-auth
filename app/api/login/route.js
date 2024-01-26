@@ -13,7 +13,8 @@
 // limitations under the License.
 import axios from "axios";
 import jwt from "jsonwebtoken";
-import config  from "../../conf";
+import config from "../../conf";
+
 
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
@@ -31,12 +32,15 @@ export async function GET(req) {
   };
 
   try {
+    console.log("tokenConfig", tokenConfig);
     const response = await axios(tokenConfig);
+    console.log("response", response);
     const token = response.data.access_token;
     const decodeToken = jwt.decode(token);
+    console.log("decodeToken", decodeToken);
 
     return Response.json({ decodeToken });
   } catch (error) {
-    console.error("Error getting access token:", error.message);
+    console.error("Error getting access token:", error);
   }
 }
